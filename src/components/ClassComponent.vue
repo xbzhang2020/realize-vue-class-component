@@ -1,14 +1,15 @@
 <template>
   <div>
-    <button v-on:click="decrement">-</button>
+    <button @click="decrement">-</button>
     {{ count }}
-    <button v-on:click="increment">+</button>
+    <button @click="increment">+</button>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+// import Component from './component'
 
 @Component
 export default class Counter extends Vue {
@@ -20,6 +21,10 @@ export default class Counter extends Vue {
 
   decrement() {
     this.count--
+  }
+
+  mounted() {
+    console.log('mounted')
   }
 }
 </script>
