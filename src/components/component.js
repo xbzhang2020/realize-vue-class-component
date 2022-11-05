@@ -31,26 +31,43 @@ export function componentFactory(Component, options = {}) {
       return
     }
 
-    // 收集内部钩子
+    // 收集钩子函数
     if ($internalHooks.includes(key)) {
       options[key] = proto[key]
       return
     }
 
-    // 收集函数
-    if (typeof proto[key] === 'function') {
-      if (!options.methods) {
-        options.methods = {}
+    // 获取属性的特性
+    const descriptor = Object.getOwnPropertyDescriptor(proto, key)
+
+    // 收集 methods
+    if (typeof descriptor.value === 'function') {
+      ;(options.methods || (options.methods = {}))[key] = proto[key]
+      return
+    }
+
+    // 收集 computed
+    if (descriptor.get || descriptor.set) {
+      ;(options.computed || (options.computed = {}))[key] = {
+        get: descriptor.get,
+        set: descriptor.get,
       }
-      options.methods[key] = proto[key]
+    }
+
+    // 将其他属性收集到 data 中
+    if (descriptor.value !== void 0) {
+      ;(options.mixins || (options.mixins = [])).push({
+        data() {
+          return {
+            [key]: descriptor.value,
+          }
+        },
+      })
     }
   })
 
-  // 收集类属性，即 data 数据
-  if (!options.mixins) {
-    options.mixins = []
-  }
-  options.mixins.push({
+  // 收集类的实例属性作为 data 数据
+  ;(options.mixins || (options.mixins = [])).push({
     data(vm) {
       return collectDataFromConstructor(vm, Component)
     },
@@ -63,10 +80,11 @@ export function componentFactory(Component, options = {}) {
     delete Component.__decorators__
   }
 
+  console.log(options)
+
   return options
 }
 
-// 装饰器函数
 export default function Component(options) {
   if (typeof options === 'function') {
     return componentFactory(options)
