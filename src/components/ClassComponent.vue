@@ -13,7 +13,9 @@ import Vue from 'vue'
 // import Component from 'vue-class-component'
 import Component from './component'
 
-@Component
+@Component({
+  name: 'Counter'
+})
 export default class Counter extends Vue {
   count = 0
 

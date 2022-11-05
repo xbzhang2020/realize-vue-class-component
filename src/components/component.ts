@@ -19,7 +19,7 @@ export const $internalHooks = [
   'serverPrefetch', // 2.6
 ]
 
-export function componentFactory(Component, options = {}) {
+export function componentFactory(Component, options: any = {}) {
   // 组件名
   options.name = options.name || Component.name
 
