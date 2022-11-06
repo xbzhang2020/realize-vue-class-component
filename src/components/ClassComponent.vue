@@ -11,16 +11,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
-// import Component from 'vue-class-component'
-import { Prop } from 'vue-property-decorator'
-
+import { Log, Prop, Watch } from './decorators'
 import Component from './component'
 
 @Component({
   name: 'Counter',
 })
 export default class Counter extends Vue {
-  @Prop() title!: string
+  @Prop({ default: 'counter', type: String }) title!: string
 
   count = 0
 
@@ -28,12 +26,18 @@ export default class Counter extends Vue {
     return this.count * 2
   }
 
+  @Log
   increment() {
     this.count++
   }
 
   decrement() {
     this.count--
+  }
+
+  @Watch('count', { immediate: true})
+  handleCountChange(val, oldVal) {
+    console.log('count changed', val, oldVal)
   }
 
   mounted() {

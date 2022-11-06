@@ -12,7 +12,7 @@ export default {
 
 <template>
   <div>
-    <ClassComponent title="counter" />
+    <ClassComponent  />
     <!-- <OptionComponent /> -->
   </div>
 </template>
