@@ -81,7 +81,7 @@ export function componentFactory(Component, options: any = {}) {
     delete Component.__decorators__
   }
 
-  console.log(options)
+  // console.log(options)
 
   return options
 }
