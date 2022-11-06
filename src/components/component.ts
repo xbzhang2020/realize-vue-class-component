@@ -20,6 +20,7 @@ export const $internalHooks = [
 ]
 
 export function componentFactory(Component, options: any = {}) {
+  // console.log(Component, options)
   // 组件名
   options.name = options.name || Component.name
 

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>{{ title }}</h1>
     <button @click="decrement">-</button>
     {{ count }}
     <button @click="increment">+</button>
@@ -11,12 +12,16 @@
 <script lang="ts">
 import Vue from 'vue'
 // import Component from 'vue-class-component'
+import { Prop } from 'vue-property-decorator'
+
 import Component from './component'
 
 @Component({
-  name: 'Counter'
+  name: 'Counter',
 })
 export default class Counter extends Vue {
+  @Prop() title!: string
+
   count = 0
 
   get doubleCount() {
